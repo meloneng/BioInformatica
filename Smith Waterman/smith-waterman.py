@@ -1,4 +1,3 @@
-# Recebendo arquivo de entrada
 with open('input.txt') as f:
   content = f.readlines()
 content = [x.rstrip('\n') for x in content] 
@@ -6,11 +5,10 @@ content = [x.rstrip('\n') for x in content]
 sequencia1 = content[0]
 sequencia2 = content[1]
 
-mismatch = -1
 match = 3
+mismatch = -1
 gap = -2
 
-# Inicializando a lista de scores
 score = []
 for i in range(len(sequencia1)+1):
   row = []
@@ -24,7 +22,7 @@ for i in range(len(sequencia1)+1):
     row.append(0)
   score.append(row)
 
-backtrace = [] # Pode se imaginar como um gerador dos scores do código
+backtrace = []
 for i_idx, i in enumerate(sequencia1):
   backtrace_row = []
   for j_idx, j in enumerate(sequencia2):
@@ -50,7 +48,7 @@ for i_idx, i in enumerate(sequencia1):
     score[i_idx+1][j_idx+1] = max_score
   backtrace.append(backtrace_row)
 
-max_score = -float('inf') #Vai ser sempre menor na primeira comparação
+max_score = -float('inf')
 max_indice = 0
 for i in range(len(score) -1, 0, -1):
   if max_score < max(score[i][1:]):
@@ -60,41 +58,41 @@ for i in range(len(score) -1, 0, -1):
 seqCorrigida1 = ''
 seqCorrigida2 = ''
 
-# Posição mais alta da matriz  
 aux = (len(backtrace)-1, len(backtrace[0])-1)
 while(True):
   aux1 = aux
   aux = backtrace[aux1[0]][aux1[1]]
 
-  # Apenas ultimo caso, quando se considera apenas uma direção
   if aux1[0] < 0:
     for i in range(aux1[1], -1, -1):
       seqCorrigida1 += '-'
       seqCorrigida2 += sequencia2[i]
     break      
 
-  # Apenas ultimo caso, quando se considera apenas uma direção
   if aux1[1] < 0:
     for i in range(aux1[0], -1, -1):
       seqCorrigida1 += sequencia1[i]
       seqCorrigida2 += '-'
     break
 
-  # Direção de onde veio o array
-  if aux[0] == aux1[0]:               # Voltou na horizontal
+  
+  if aux[0] == aux1[0]:
     seqCorrigida1 += '-'
     seqCorrigida2 += sequencia2[aux1[1]]
-  elif aux[1] == aux1[1]:             # Voltou na vertical
+  elif aux[1] == aux1[1]:
     seqCorrigida1 += sequencia1[aux1[0]]
     seqCorrigida2 += '-'
-  else:                               # Voltou na diagonal
+  else:
     seqCorrigida1 += sequencia1[aux1[0]]
     seqCorrigida2 += sequencia2[aux1[1]]
   
   if aux1 == (-1, -1):
     break
 
-print('Score Final:')
+print('Score:')
 print(score[-1][-1])
-print("Sequencia 1 gerada:", seqCorrigida1[len(seqCorrigida1)::-1])
-print("Sequencia 2 gerada:", seqCorrigida2[len(seqCorrigida1)::-1])
+
+arquivo = open('output.txt','w')
+arquivo.write(str(seqCorrigida1[len(seqCorrigida1)::-1]) + '\n')
+arquivo.write(str(seqCorrigida2[len(seqCorrigida1)::-1]) + '\n')
+arquivo.close()
