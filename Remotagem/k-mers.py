@@ -1,10 +1,10 @@
 # Debug library
-from icecream import ic
-ic.configureOutput(prefix='Debug| ')
+#from icecream import ic
+#ic.configureOutput(prefix='Debug| ')
 #ic.disable()
 
 # Opening file
-with open('input-25.txt') as f:
+with open('input-50.txt') as f:
   content = f.read()
 
 # Creating an array with all the mers
@@ -18,7 +18,7 @@ for i in content:
   aux1 = aux1 + i
 
 # Tamanho do mers
-k = 25
+k = 50
 
 # The dicts to be used
 prefixes = {}
@@ -83,3 +83,4 @@ while(prefixes):
 arquivo = open('output.txt','w')
 arquivo.write(DNA + '\n')
 arquivo.close()  
+
